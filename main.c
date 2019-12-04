@@ -9,19 +9,28 @@
 #include <time.h>
 #include <dirent.h>
 
+
 char ** parse_args( char * line ){
-  char *s1 = line;
-  char ** arguments = malloc(5 * sizeof(char *));
-  int index = 0;
-  while(s1 != NULL){
-    arguments[index] = strsep(&s1, " ");
-    //printf("%d: [%s]\n",index, arguments[index]);
-    index++;
+  char *current = line;
+  char *token;
+  char ** args = malloc(10 * sizeof(char*));
+  int i = 0;
+  while(current != NULL){
+    token = strsep(&current, " ");
+    args[i] = token;
+    i++;
   }
-  arguments[index] = NULL;
-  return arguments;
+  args[i] = NULL;
+  return args;
 }
 
 int main(){
+  // printf("Input Your Command:");
+  char input[100] = "ls -a -l";
+  // fgets(input, sizeof(input), stdin);
+  // printf("%s",input);
+  char * line = input;
+  char ** args = parse_args( line );
+  execvp(args[0], args);
   return 0;
 }
