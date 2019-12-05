@@ -25,13 +25,21 @@ char ** parse_args( char * line ){
 }
 
 int main(){
-  //printf("Input Your Command:");
-  char input[100];
-  fgets(input, sizeof(input), stdin);
-  input[strlen(input)-1] = 0;
-  char * line = input;
-  printf("%s\n", line );
-  char ** args = parse_args( line );
-  execvp(args[0], args);
+  printf("Input Your Command:");
+  int j;
+  int k;
+  while(1==1){
+    char input[100];
+    fgets(input, sizeof(input), stdin);
+    input[strlen(input)-1] = 0;
+    char * line = input;
+    //printf("%s\n", line );
+    char ** args = parse_args( line );
+    k = fork();
+    if(k==0) {
+      execvp(args[0], args);
+    }
+    wait(&j);
+  }
   return 0;
 }
