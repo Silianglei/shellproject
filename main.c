@@ -25,10 +25,11 @@ char ** parse_args( char * line ){
 }
 
 int main(){
-  printf("Input Your Command:");
+  // printf("Input Your Command:");
   int j;
   int k;
   while(1==1){
+    printf("Input Your Command:");
     char input[100];
     fgets(input, sizeof(input), stdin);
     input[strlen(input)-1] = 0;
