@@ -27,14 +27,14 @@ char ** parse_args( char * line, char * delimeter){
   return args;
 }
 
-//Given two integers and a command seperated by spaces, runCommand2 executes the command through
+//Given two integers and a command seperated by spaces, runCommand executes the command through
 //parsing and execvp
-void runCommand2(int j, int k, char input[]){
+void runCommand(int j, int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
   char ** args = parse_args(line, " ");
   if (strcmp(args[0], "exit") == 0) {
-    return exit(0);
+    exit(0);
   }
   if (strcmp(args[0],  "cd" ) == 0) {
     chdir(args[1]);
@@ -50,15 +50,16 @@ void runCommand2(int j, int k, char input[]){
 int main(int argc, char * argv[]){
   int j;
   int k;
+  char m[100];
   while(1){
-    printf("Input Your Command:");
+    printf("%s# ", getcwd(m, 100));
     char input[100];
     fgets(input, sizeof(input), stdin);
     char ** commandsToRun = parse_args(input, ";");
     int i = 0;
     while(commandsToRun[i] != NULL){
       //printf("'%s'\n", commandsToRun[i]);
-      runCommand2(j, k, commandsToRun[i]);
+      runCommand(j, k, commandsToRun[i]);
       i++;
     }
   }
