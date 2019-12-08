@@ -9,24 +9,47 @@
 #include <time.h>
 #include <dirent.h>
 
-
-char ** parse_args( char * line ){
+//Given a string and a delimeter, parse_args seperates the string based on the
+//given delimeter and returns an array of strings
+char ** parse_args( char * line, char * delimeter){
   char *current = line;
   char *token;
   char ** args = malloc(10 * sizeof(char*));
   int i = 0;
   while(current != NULL){
-    args[i] = strsep(&current, " ");
+    args[i] = strsep(&current, delimeter);
+    if (i > 0 && strcmp(";", delimeter) == 0) {
+      args[i]++;
+    }
     i++;
   }
   args[i] = NULL;
   return args;
 }
 
+// char ** parse_lines( char * lines ){
+//   char *current = lines;
+//   char *token;
+//   char ** args = malloc(10 * sizeof(char*));
+//   int i = 0;
+//   while(current != NULL){
+//     args[i] = strsep(&current, ";");\
+//     if (i > 0) {
+//       args[i]++;
+//     }
+//     i++;
+//   }
+//   args[i] = NULL;
+//   return args;
+// }
+
+
+//Given two integers and a command seperated by spaces, runCommand2 executes the command through
+//parsing and execvp
 void runCommand2(int j, int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
-  char ** args = parse_args( line );
+  char ** args = parse_args(line, " ");
   k = fork();
   if(k==0) {
     execvp(args[0], args);
@@ -34,6 +57,8 @@ void runCommand2(int j, int k, char input[]){
   wait(&j);
 }
 
+
+//Given two integers, runCommand gets user input and executes runCommand2.
 void runCommand(int j, int k){
   char input[100];
   fgets(input, sizeof(input), stdin);
@@ -49,27 +74,12 @@ void runCommand(int j, int k){
 }
 
 
-
-char ** parse_lines( char * lines ){
-  char *current = lines;
-  char *token;
-  char ** args = malloc(10 * sizeof(char*));
-  int i = 0;
-  while(current != NULL){
-    args[i] = strsep(&current, ";");\
-    if (i > 0) {
-      args[i]++;
-    }
-    i++;
-  }
-  args[i] = NULL;
-  return args;
-}
-
+// Given two integers, runMult recieves an array of commands, and executes
+//each of those commands.
 void runMult(int j, int k){
   char input[100];
   fgets(input, sizeof(input), stdin);
-  char ** commandsToRun = parse_lines(input);
+  char ** commandsToRun = parse_args(input, ";");
   int i = 0;
   while(commandsToRun[i] != NULL){
     //printf("'%s'\n", commandsToRun[i]);
@@ -79,8 +89,8 @@ void runMult(int j, int k){
 }
 
 
-
-int main(){
+//Continously recieves user input
+int main(int argc, char * argv[]){
   int j;
   int k;
   while(1==1){
@@ -96,7 +106,8 @@ int main(){
     //   execvp(args[0], args);
     // }
     // wait(&j);
-    char token[100] = "ls -a -l";
+    //char token[100] = "ls -a -l";
+    // special handling for cd and exit
     runMult(j,k);
   }
   return 0;
