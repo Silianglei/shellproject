@@ -11,25 +11,7 @@
 #include "headers.h"
 
 
-//Continously recieves user input
-int main(int argc, char * argv[]){
-  int j;
-  int k;
-  char m[100];
-  while(1){
-    printf("%s# ", getcwd(m, 100));
-    char input[100];
-    fgets(input, sizeof(input), stdin);
-    char ** commandsToRun = parse_args(input, ";");
-    int i = 0;
-    while(commandsToRun[i] != NULL){
-      //printf("'%s'\n", commandsToRun[i]);
-      runCommand(j, k, commandsToRun[i]);
-      i++;
-    }
-  }
-  return 0;
-}
+
 
 //Given a string and a delimeter, parse_args seperates the string based on the
 //given delimeter and returns an array of strings
