@@ -9,8 +9,6 @@
 #include <time.h>
 #include <dirent.h>
 #include "headers.h"
-#include "functions.c"
-
 
 //Continously recieves user input
 int main(int argc, char * argv[]){
