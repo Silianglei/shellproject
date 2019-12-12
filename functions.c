@@ -41,6 +41,31 @@ void redirectOutput(int j, int k, char ** command){
   close(d);
   execvp(toRun[0], toRun);
 }
+void runRedirect_out(char * command) {
+	char ** commands = parse_args(command, ">");
+	char ** args = parse_args(commands[0], " ");
+	char * file_name = commands[1];
+
+	int fd = open(file_name, O_CREAT|O_EXCL|O_WRONLY|O_TRUNC, 0755);
+
+	if (fork() == 0) {
+		dup2(fd, STDOUT_FILENO);
+	}
+	close(fd);
+}
+
+void runRedirect_in(char * command) {
+  char ** commands = parse_args(command, "<");
+  char ** args = parse_args(commands[0], " ");
+	char * file_name = commands[1];
+
+	int fd = open(file_name, O_RDONLY);
+
+  if (fork() == 0) {
+		dup2(fd, STDOUT_FILENO);
+	}
+	close(fd);
+}
 
 //Given a string and a delimeter, parse_args seperates the string based on the
 //given delimeter and returns an array of strings
@@ -62,26 +87,18 @@ char ** parse_args( char * line, char * delimeter){
 
 //Given two integers and a command seperated by spaces, runCommand executes the command through
 //parsing and execvp
-void runCommand(int j, int k, char input[]){
+void runCommand(int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
   char ** args = parse_args(line, " ");
-  //printf("%d\n", find_redirectOutput(args));
-  if (find_redirectOutput(args) > -1){
-    redirectOutput(j,k,args);
+  if (strcmp(args[0], "exit") == 0) {
+    exit(0);
   }
-  else {
-    if (strcmp(args[0], "exit") == 0) {
-      exit(0);
-    }
-    if (strcmp(args[0],  "cd" ) == 0) {
-      chdir(args[1]);
-    }
-    k = fork();
-    if(k==0) {
-      execvp(args[0], args);
-    }
-    wait(&j);
+  if (strcmp(args[0],  "cd" ) == 0) {
+    chdir(args[1]);
   }
-
+  k = fork();
+  if(k==0) {
+    execvp(args[0], args);
+  }
 }
