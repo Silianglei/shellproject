@@ -32,7 +32,7 @@ void redirectOutput(char ** command){
     index++;
   }
 
-  int out = open(command[delim + 1], O_CREAT|O_EXCL|O_WRONLY|O_TRUNC, 0755);
+  int out = open(command[delim + 1], O_RDWR|O_CREAT|O_TRUNC);
   int d = dup(STDOUT_FILENO);
   if (fork() == 0) {
     dup2(out, 1);
