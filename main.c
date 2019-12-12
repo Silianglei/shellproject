@@ -25,16 +25,9 @@ int main(int argc, char * argv[]){
     fgets(input, sizeof(input), stdin);
     char ** commandsToRun = parse_args(input, ";");
     int i;
-    for(i=0 ; commandsToRun[i] != NULL ; i++){
-      //printf("'%s'\n", commandsToRun[i]);
-      if(strchr(commandsToRun[i], 62) != NULL){
-        runRedirect_in(commandsToRun[i]);
-      }
-      else if(strchr(commandsToRun[i], 60) != NULL){
-        runRedirect_out(commandsToRun[i]);
-      }
-      else runCommand(k, commandsToRun[i]);
-      wait(&j);
+    while (commandsToRun[i] != NULL) {
+      runCommand(j, k, commandsToRun[i]);
+      i++;
     }
     printf("%s# ", getcwd(prompt, 100));
   }

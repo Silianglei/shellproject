@@ -1,7 +1,7 @@
 char ** parse_args( char * line, char * delimeter);
 
-void runCommand(int k, char input[]);
+void runCommand(int j, int k, char input[]);
 
-void runRedirect_out(char * command);
+int find_redirectOutput(char ** args)
 
-void runRedirect_in(char * command);
+void redirectOutput(char ** command)
