@@ -11,6 +11,8 @@
 #include "headers.h"
 
 
+
+
 int find_redirectOutput(char ** args){
   int index = 0;
   const char *outDir = ">";
@@ -64,10 +66,11 @@ void runCommand(int j, int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
   char ** args = parse_args(line, " ");
+  //printf("%d\n", find_redirectOutput(args));
   if (find_redirectOutput(args) > -1){
     redirectOutput(args);
   }
-  else{
+  else {
     if (strcmp(args[0], "exit") == 0) {
       exit(0);
     }
@@ -80,4 +83,5 @@ void runCommand(int j, int k, char input[]){
     }
     wait(&j);
   }
+
 }

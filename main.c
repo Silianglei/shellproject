@@ -10,23 +10,23 @@
 #include <dirent.h>
 #include "headers.h"
 
+
 //Continously recieves user input
 int main(int argc, char * argv[]){
   int j;
   int k;
-  char prompt[100];
-  char input[100];
-  char ** commandsToRun;
-  printf("%s# ", getcwd(prompt, 100));
+  char m[100];
   while(1){
-    input[strlen(input) - 1] = 0;
+    printf("%s# ", getcwd(m, 100));
+    char input[100];
     fgets(input, sizeof(input), stdin);
     char ** commandsToRun = parse_args(input, ";");
-    int i;
-    while (commandsToRun[i] != NULL) {
+    int i = 0;
+    while(commandsToRun[i] != NULL){
+      //printf("'%s'\n", commandsToRun[i]);
       runCommand(j, k, commandsToRun[i]);
       i++;
     }
-    printf("%s# ", getcwd(prompt, 100));
   }
+  return 0;
 }
