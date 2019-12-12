@@ -11,8 +11,6 @@
 #include "headers.h"
 
 
-
-
 int find_redirectOutput(char ** args){
   int index = 0;
   const char *outDir = ">";
@@ -36,10 +34,12 @@ void redirectOutput(char ** command){
 
   int out = open(command[delim + 1], O_RDWR | O_CREAT | O_TRUNC);
   int d = dup(STDOUT_FILENO);
-  dup2(out, 1);
-  close(out);
-  close(d);
-  execvp(toRun[0], toRun);
+  if (fork() == 0) {
+    dup2(out, 1);
+    close(out);
+    close(d);
+    execvp(toRun[0], toRun);
+  }
 }
 
 //Given a string and a delimeter, parse_args seperates the string based on the
@@ -66,11 +66,10 @@ void runCommand(int j, int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
   char ** args = parse_args(line, " ");
-  //printf("%d\n", find_redirectOutput(args));
   if (find_redirectOutput(args) > -1){
     redirectOutput(args);
   }
-  else {
+  else{
     if (strcmp(args[0], "exit") == 0) {
       exit(0);
     }
@@ -83,5 +82,4 @@ void runCommand(int j, int k, char input[]){
     }
     wait(&j);
   }
-
 }
