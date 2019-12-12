@@ -23,7 +23,7 @@ int find_redirectOutput(char ** args){
   return -1;
 }
 
-void redirectOutput(char ** command){
+void redirectOutput(int j, char ** command){
   int delim = find_redirectOutput(command);
   char ** toRun = calloc(sizeof(char *), 10);
   int index = 0;
@@ -32,14 +32,16 @@ void redirectOutput(char ** command){
     index++;
   }
 
-  int out = open(command[delim + 1], O_RDWR|O_CREAT|O_TRUNC);
+  int out = open(command[delim + 1], O_RDWR|O_CREAT|O_TRUNC, 0755);
   int d = dup(STDOUT_FILENO);
   if (fork() == 0) {
     dup2(out, 1);
     close(out);
     close(d);
     execvp(toRun[0], toRun);
+    exit(1);
   }
+  wait(&j);
 }
 
 //Given a string and a delimeter, parse_args seperates the string based on the
@@ -67,7 +69,7 @@ void runCommand(int j, int k, char input[]){
   char * line = input;
   char ** args = parse_args(line, " ");
   if (find_redirectOutput(args) > -1){
-    redirectOutput(args);
+    redirectOutput(j, args);
   }
   else{
     if (strcmp(args[0], "exit") == 0) {
