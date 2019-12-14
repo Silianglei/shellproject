@@ -10,6 +10,59 @@
 #include <dirent.h>
 #include "headers.h"
 
+int find_redirectInput(char ** args){
+  int index = 0;
+  const char *outDir = "<";
+  while (args[index] != NULL) {
+    if (strcmp(args[index], outDir) == 0) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
+}
+
+// void redirectInput(int j, char ** command){
+//   int delim = find_redirectOutput(command);
+//   char ** toRun = calloc(sizeof(char *), 10);
+//   int index = 0;
+//   while (index < delim){
+//     toRun[index] = command[index];
+//     index++;
+//   }
+//
+//   int out = open(command[delim + 1], O_RDWR|O_CREAT|O_TRUNC, 0755);
+//   int d = dup(STDOUT_FILENO);
+//   if (fork() == 0) {
+//     dup2(out, 1);
+//     close(out);
+//     close(d);
+//     execvp(toRun[0], toRun);
+//     exit(1);
+//   }
+//   wait(&j);
+// }
+
+void redirectInput(int j, char * command){
+  char ** arg;
+  arg = parse_args(command, "<");
+  char ** afile = parse_args(arg, " ");
+  FILE *file = open(afile[0], O_RDONLY);
+
+  int d = dup(STDIN_FILENO);
+  dup2(file, STDIN_FILENO);
+  close(file);
+  char ** args =  parse_args(arg[0], " ");
+  if (fork() == 0) {
+    close(d);
+    execvp(args[0], args);
+    exit(1);
+  }
+  wait(&j);
+
+}
+
+
 
 int find_redirectOutput(char ** args){
   int index = 0;
@@ -39,39 +92,7 @@ void redirectOutput(int j, char ** command){
     close(out);
     close(d);
     execvp(toRun[0], toRun);
-    exit(1);int find_redirectInput(char ** args){
-  int index = 0;
-  const char *outDir = "<";
-  while (args[index] != NULL) {
-    if (strcmp(args[index], outDir) == 0) {
-      return index;
-    }
-    index++;
-  }
-  return -1;
-}
-
-void redirectInput(int j, char ** command){
-  int delim = find_redirectOutput(command);
-  char ** toRun = calloc(sizeof(char *), 10);
-  int index = 0;
-  while (index < delim){
-    toRun[index] = command[index];
-    index++;
-  }
-
-  int out = open(command[delim + 1], O_RDWR|O_CREAT|O_TRUNC, 0755);
-  int d = dup(STDOUT_FILENO);
-  if (fork() == 0) {
-    dup2(out, 1);
-    close(out);
-    close(d);
-    execvp(toRun[0], toRun);
     exit(1);
-  }
-  wait(&j);
-}
-
   }
   wait(&j);
 }
@@ -102,6 +123,9 @@ void runCommand(int j, int k, char input[]){
   char ** args = parse_args(line, " ");
   if (find_redirectOutput(args) > -1){
     redirectOutput(j, args);
+  }
+  else if (find_redirectInput(args) > -1){
+    redirectInput(j, line);
   }
   else{
     if (strcmp(args[0], "exit") == 0) {
