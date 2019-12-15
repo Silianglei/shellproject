@@ -37,7 +37,7 @@ void redirectInput(int j, char ** command){
 		    commands[i]++;
     }
 	  if (commands[i][strlen(commands[i]) - 1] == 32) {
-		     commands[i][strlen(commands[i]) - 1] = 0;
+		    commands[i][strlen(commands[i]) - 1] = 0;
     }
     i++;
 	}
