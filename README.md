@@ -1,6 +1,6 @@
 # Project 1: Shell[ing] out commands
 by Akash Das and Si Liang Lei
-##Features
+## Features
 1. Our shell takes in user input in the form of command 1 ; command 2 ..
   - Each command is seprated by one space, one semicolon followed by one space.
   - Example: ls -a -l ; echo test
@@ -9,18 +9,18 @@ by Akash Das and Si Liang Lei
 4. Our shell implements simple pipes
 - Example: ls|wc
 
-##Features Implemented But Were Unsuccessful
+## Features Implemented But Were Unsuccessful
 
-##Bugs
+## Bugs
 
-##Function Headers
-#main.c
+## Function Headers
+# main.c
 1. int main()
 - Input: None
 - Returns: 0
 - Takes in the commands inputed by the user. Parses the commands separate by a semicolon into separate commands. Executes each of those commands. When each of the commands are executed, the program asks for user input again. Terminates if the command is exit.
 
-#functions.c
+# functions.c
 
 1. int find_redirectInput(char ** args)
 2. void redirectInput(int j, char ** command)
