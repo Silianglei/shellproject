@@ -30,7 +30,7 @@ by Akash Das and Si Liang Lei
 2. void redirectInput(int j, char ** command)
     - Input: Takes an integer, and an array of strings
     - Returns: Void
-    - Redirects the contents of a file as the inout for the command
+    - Redirects the contents of a file as the Input for the command
 3. int find_redirectOutput(char ** args)
     - Input: Takes an array of strings
     - Returns: Returns the index of the string that contains "<". If not, returns -1.
