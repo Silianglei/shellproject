@@ -10,8 +10,10 @@ by Akash Das and Si Liang Lei
     - Example: ls|wc
 
 ## Features Implemented But Were Unsuccessful
+1. None so far
 
 ## Bugs
+1. Cannot take in commands separated by just semicolons, no spaces. Must be of the format command 1 ; command 2 ; command 3 ...
 
 ## Function Headers
 ### main.c
@@ -27,13 +29,15 @@ by Akash Das and Si Liang Lei
     - Returns: Returns the index of the string that contains "<". If not, returns -1.
 2. void redirectInput(int j, char ** command)
     - Input: Takes an integer, and an array of strings
-    - Returns:
+    - Returns: Void
+    - Redirects the contents of a file as the inout for the command
 3. int find_redirectOutput(char ** args)
     - Input: Takes an array of strings
     - Returns: Returns the index of the string that contains "<". If not, returns -1.
 4. void redirectOutput(int j, char ** command)
     - Input: Takes an integer, and an array of strings
-    - Returns:
+    - Returns: void
+    - Redirects the output of the command into the given file
 5. char ** parse_args( char * line, char * delimeter)
     - Input: Takes a string to be parsed, and a string which is the delimeter the function parses by
     - Returns: Returns an array of strings after the string has been parsed by the given delimeter
