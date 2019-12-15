@@ -9,3 +9,5 @@ int find_redirectInput(char ** args);
 void redirectOutput(int j, char ** command);
 
 void redirectInput(int j, char ** command);
+
+void redirectDouble(int j, char ** command);

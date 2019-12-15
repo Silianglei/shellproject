@@ -90,6 +90,43 @@ void redirectOutput(int j, char ** command){
   wait(&j);
 }
 
+void redirectDouble(int j, char ** command){
+  int delim = find_redirectOutput(command);
+  char * toWrite = command[delim + 1];
+  char ** args;
+  int index = 0;
+  char dest[100] = "";
+  for (int i = 0; i<delim; i++) {
+		strcat(dest, command[i]);
+		strcat(dest, " ");
+	}
+
+  char ** commands = parse_args(dest, "<");
+
+  int i = 0;
+  while(commands[i] != NULL){
+    if (commands[i][0] == 32) {
+		    commands[i]++;
+    }
+	  if (commands[i][strlen(commands[i]) - 1] == 32) {
+		    commands[i][strlen(commands[i]) - 1] = 0;
+    }
+    i++;
+	}
+  char ** toRun = parse_args(commands[0] , " ");
+  int rfile = open(commands[1], O_RDONLY);
+  int wfile = open(toWrite, O_RDWR|O_CREAT|O_TRUNC, 0755);
+  if (fork() == 0) {
+		dup2(rfile, STDIN_FILENO);
+		dup2(wfile, STDOUT_FILENO);
+		execvp(toRun[0], toRun);
+	  exit(1);
+	}
+  wait(&j);
+  close(rfile);
+  close(wfile);
+}
+
 //Given a string and a delimeter, parse_args seperates the string based on the
 //given delimeter and returns an array of strings
 char ** parse_args( char * line, char * delimeter){
@@ -114,7 +151,10 @@ void runCommand(int j, int k, char input[]){
   input[strlen(input)-1] = 0;
   char * line = input;
   char ** args = parse_args(line, " ");
-  if (find_redirectOutput(args) > -1){
+  if (find_redirectOutput(args) > -1 && find_redirectInput(args) > -1){
+    redirectDouble(j, args);
+  }
+  else if (find_redirectOutput(args) > -1){
     redirectOutput(j, args);
   }
   else if (find_redirectInput(args) > -1){
