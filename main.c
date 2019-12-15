@@ -12,7 +12,7 @@
 
 
 //Continously recieves user input
-int main(int argc, char * argv[]){
+int main(){
   int j;
   int k;
   char m[100];
