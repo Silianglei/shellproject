@@ -46,7 +46,7 @@ void pipeCommand(int j, char ** command);
 void redirectAppend(int j, char ** command);
 // Input: Takes an integer and an array of strings
 // Returns: void
-// Redirects output to a file, appending the redirected output  the end of the given file
+// Redirects output to a file, appending the redirected output the end of the given file
 
 int find_redirectAppend(char ** args);
 // Input: Takes an array of strings
