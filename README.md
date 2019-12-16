@@ -7,7 +7,7 @@ by Akash Das and Si Liang Lei
 2. Our shell is able to take in the commands exit and cd.
 3. Our shell implements simple redirection using > (redirecting stdout) and < (redirecting stdin)
 4. Our shell implements simple pipes
-    - Example: ls|wc
+    - Example: ```ls|wc```
 
 ## Features Implemented But Were Unsuccessful
 1. None so far
