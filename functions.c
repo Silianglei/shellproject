@@ -138,7 +138,14 @@ void redirectDouble(int j, char ** command){
   close(wfile);
 }
 
-void pipeCommand(int j, char ** line){
+void pipeCommand(int j, char ** command){
+  char line[100] = "";
+  for (int i = 0; command[i] != NULL; i++) {
+		strcat(line, command[i]);
+		strcat(line, " ");
+	}
+  line[strlen(line)-1] = 0;
+  printf("%s\n", line);
   char ** commands = parse_args(line, "|");
   char ** command1 = parse_args(commands[0], " ");
   char ** command2 = parse_args(commands[1], " ");
@@ -198,7 +205,7 @@ void runCommand(int j, int k, char input[]){
     redirectInput(j, args);
   }
   else if (find_pipe(args) > -1) {
-    pipeCommand(j, line);
+    pipeCommand(j, args);
 	}
   else{
     if (strcmp(args[0], "exit") == 0) {
