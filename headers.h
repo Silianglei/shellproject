@@ -35,4 +35,10 @@ void redirectDouble(int j, char ** command);
 // Redirects the contents of a given file as the input for a process. That output is then redirected into another given file.
 
 int find_pipe(char ** args);
+
 void pipeCommand(int j, char ** command);
+
+
+int find_redirectAppend(char ** args);
+
+void redirectAppend(int j, char ** command);
