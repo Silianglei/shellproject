@@ -24,24 +24,25 @@ by Akash Das and Si Liang Lei
 
 ### functions.c
 
-1. int find_redirectInput(char ** args)
+1. ```int find_redirectInput(char ** args)```
     - Input: Takes an array of strings
     - Returns: Returns the index of the string that contains "<". If not found, returns -1.
-2. void redirectInput(int j, char ** command)
+2. ```void redirectInput(int j, char ** command)```
     - Input: Takes an integer, and an array of strings
     - Returns: Void
     - Redirects the contents of the given file as the input for the given process
-3. int find_redirectOutput(char ** args)
+3. ```int find_redirectOutput(char ** args)```
     - Input: Takes an array of strings
     - Returns: Returns the index of the string that contains "<". If not found, returns -1.
-4. void redirectOutput(int j, char ** command)
+4. ```void redirectOutput(int j, char ** command)```
     - Input: Takes an integer, and an array of strings
     - Returns: void
     - Redirects the output of the given process into the given file
-5. char ** parse_args( char * line, char * delimeter)
+5. ```char ** parse_args( char * line, char * delimeter)```
     - Input: Takes a string to be parsed, and a string which is the delimeter the function parses by
     - Returns: Returns an array of strings after the given string has been parsed by the given delimeter
-6. void runCommand(int j, int k, char input[])
+6. ```void redirectDouble(int j, char ** command)```
+7. ```void runCommand(int j, int k, char input[])```
     - Input: Takes in two integers and a command separated by spaces
     - Returns: Void
     - Executes ```redirectOutput(j, args);``` if command contains >
