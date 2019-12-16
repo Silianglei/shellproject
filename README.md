@@ -6,8 +6,11 @@ by Akash Das and Si Liang Lei
     - Example: ```ls -a -l ; echo test```
 2. Our shell implements exit and cd.
 3. Our shell implements simple redirection using > (redirecting stdout) and < (redirecting stdin)
+    - Example: ```w > wholist``` and ```./program < commands.txt```
 4. Our shell implements simple pipes
     - Example: ```ls|wc```
+5. Our shell implements ">>" which redirects output to a file, appending the redirected output  the end of the given file
+    - Example: ```ls -a -l >> testfile```
 
 ## Features Implemented But Were Unsuccessful
 1. None so far
@@ -24,25 +27,39 @@ Takes in the commands inputed by the user. Parses the commands separate by a sem
 1. ```int find_redirectInput(char ** args)```
     - Input: Takes an array of strings
     - Returns: Returns the index of the string that contains "<". If not found, returns -1.
-2. ```void redirectInput(int j, char ** command)```
+2. ```int find_redirectOutput(char ** args)```
+    - Input: Takes an array of strings
+    - Returns: Returns the index of the string that contains "<". If not found, returns -1.
+3. ```int find_pipe(char ** args)```
+    - Input: Takes an array of strings
+    - Returns: Returns the index of the string that contains "|". If not found, returns -1.
+4. ```int find_redirectAppend(char ** args)```
+    - Input: Takes an array of strings
+    - Returns: Returns the index of the string that contains ">>". If not found, returns -1.
+4. ```void redirectInput(int j, char ** command)```
     - Input: Takes an integer, and an array of strings
     - Returns: Void
     - Redirects the contents of the given file as the input for the given process
-3. ```int find_redirectOutput(char ** args)```
-    - Input: Takes an array of strings
-    - Returns: Returns the index of the string that contains "<". If not found, returns -1.
-4. ```void redirectOutput(int j, char ** command)```
+5. ```void redirectOutput(int j, char ** command)```
     - Input: Takes an integer, and an array of strings
     - Returns: void
     - Redirects the output of the given process into the given file
-5. ```char ** parse_args( char * line, char * delimeter)```
+6. ```void pipeCommand(int j, char ** command)```
+    - Input:Takes an integer, and an array of strings
+    - Returns: Void
+    - Runs the given process and use the output as the input for the second process
+7. ```char ** parse_args( char * line, char * delimeter)```
     - Input: Takes a string to be parsed, and a string which is the delimeter the function parses by
     - Returns: Returns an array of strings after the given string has been parsed by the given delimeter
-6. ```void redirectDouble(int j, char ** command)```
+8. ```void redirectDouble(int j, char ** command)```
     - Input: Takes an integer and an array of strings
     - Returns: void
     - Redirects the contents of a given file as the input for a process. That output is then redirected into another given file.
-7. ```void runCommand(int j, int k, char input[])```
+9. ```void redirectAppend(int j, char ** command)```
+    - Input: Takes an integer and an array of strings
+    - Returns: void
+    - Redirects output to a file, appending the redirected output  the end of the given file
+10. ```void runCommand(int j, int k, char input[])```
     - Input: Takes in two integers and a command separated by spaces
     - Returns: Void
     - Executes ```redirectOutput(j, args);``` if command contains >

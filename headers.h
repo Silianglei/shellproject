@@ -35,10 +35,19 @@ void redirectDouble(int j, char ** command);
 // Redirects the contents of a given file as the input for a process. That output is then redirected into another given file.
 
 int find_pipe(char ** args);
+//Input: Takes an array of strings
+// Returns: Returns the index of the string that contains "|". If not found, returns -1.
 
 void pipeCommand(int j, char ** command);
-
-
-int find_redirectAppend(char ** args);
+// Input:Takes an integer, and an array of strings
+//Returns: Void
+// Runs the given process and use the output as the input for the second process
 
 void redirectAppend(int j, char ** command);
+// Input: Takes an integer and an array of strings
+// Returns: void
+// Redirects output to a file, appending the redirected output  the end of the given file
+
+int find_redirectAppend(char ** args);
+// Input: Takes an array of strings
+// Returns: Returns the index of the string that contains ">>". If not found, returns -1.
