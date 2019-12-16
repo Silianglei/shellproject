@@ -46,6 +46,18 @@ int find_pipe(char ** args){
   return -1;
 }
 
+int find_redirectAppend(char ** args){
+  int index = 0;
+  const char *outDir = ">>";
+  while (args[index] != NULL) {
+    if (strcmp(args[index], outDir) == 0) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
+}
+
 void redirectInput(int j, char ** command){
   char dest[100] = "";
   for (int i = 0; command[i] != NULL; i++) {
@@ -180,6 +192,30 @@ void pipeCommand(int j, char ** command){
   wait(&j);
 }
 
+
+void redirectAppend(int j, char ** command){
+  int delim = find_redirectAppend(command);
+  char ** toRun = calloc(sizeof(char *), 10);
+  int index = 0;
+  while (index < delim){
+    toRun[index] = command[index];
+    index++;
+  }
+
+  int out = open(command[delim + 1], O_RDWR|O_CREAT|O_APPEND, 0755);
+  int d = dup(STDOUT_FILENO);
+  if (fork() == 0) {
+    dup2(out, 1);
+    close(out);
+    close(d);
+    execvp(toRun[0], toRun);
+    exit(1);
+  }
+  wait(&j);
+}
+
+
+
 //Given a string and a delimeter, parse_args seperates the string based on the
 //given delimeter and returns an array of strings
 char ** parse_args( char * line, char * delimeter){
@@ -215,6 +251,9 @@ void runCommand(int j, int k, char input[]){
   }
   else if (find_pipe(args) > -1) {
     pipeCommand(j, args);
+	}
+  else if (find_redirectAppend(args) > -1) {
+    redirectAppend(j, args);
 	}
   else{
     if (strcmp(args[0], "exit") == 0) {
