@@ -169,7 +169,9 @@ void runCommand(int j, int k, char input[]){
     }
     k = fork();
     if(k==0) {
-      execvp(args[0], args);
+      //execvp(args[0], args);
+      if (execvp(args[0], args) == -1)
+						 exit(-1);
     }
     wait(&j);
   }
