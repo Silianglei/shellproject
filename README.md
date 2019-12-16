@@ -13,7 +13,7 @@ by Akash Das and Si Liang Lei
 1. None so far
 
 ## Bugs
-1. Cannot take in commands separated by just semicolons. Must be of the format ```command 1 ; command 2 ; command 3... ```
+1. Cannot take in commands separated by just semicolons. All items on the command line are to be separated by a single space. Must be of the format ```command 1 ; command 2 ; command 3... ```
 
 ## Function Headers
 ### main.c
