@@ -8,7 +8,7 @@ by Akash Das and Si Liang Lei
 3. Our shell implements simple redirection using > (redirecting stdout) and < (redirecting stdin)
     - Example: ```w > wholist``` and ```./program < commands.txt```
 4. Our shell implements simple pipes
-    - Example: ```ls|wc```
+    - Example: ```ls | wc```
 5. ADDITIONAL FEATURE: Our shell implements ">>" which redirects output to a file, appending the redirected output  the end of the given file
     - Example: ```ls -a -l >> testfile```
 
