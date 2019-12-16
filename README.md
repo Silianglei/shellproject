@@ -1,7 +1,7 @@
 # Project 1: Shell[ing] out commands
 by Akash Das and Si Liang Lei
 ## Features
-1. Our shell takes in user input in the form of command 1 ; command 2 ..
+1. Our shell takes in user input in the form of ```command 1 ; command 2 ; command 3... ```
     - Each command is seprated by one space, one semicolon followed by one space.
     - Example: ```ls -a -l ; echo test```
 2. Our shell is able to take in the commands exit and cd.
