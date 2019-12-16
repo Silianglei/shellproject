@@ -4,7 +4,7 @@ by Akash Das and Si Liang Lei
 1. Our shell takes in user input in the form of ```command 1 ; command 2 ; command 3... ```
     - Each command is seprated by one space, one semicolon followed by one space.
     - Example: ```ls -a -l ; echo test```
-2. Our shell is able to take in the commands exit and cd.
+2. Our shell implements exit and cd.
 3. Our shell implements simple redirection using > (redirecting stdout) and < (redirecting stdin)
 4. Our shell implements simple pipes
     - Example: ```ls|wc```
@@ -39,6 +39,9 @@ Takes in the commands inputed by the user. Parses the commands separate by a sem
     - Input: Takes a string to be parsed, and a string which is the delimeter the function parses by
     - Returns: Returns an array of strings after the given string has been parsed by the given delimeter
 6. ```void redirectDouble(int j, char ** command)```
+    - Input: Takes an integer and an array of strings
+    - Returns: void
+    - Redirects the contents of a given file as the input for a process. That output is then redirected into another given file.
 7. ```void runCommand(int j, int k, char input[])```
     - Input: Takes in two integers and a command separated by spaces
     - Returns: Void
