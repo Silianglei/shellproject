@@ -1,24 +1,32 @@
 echo NORMAL TEST
 ls
 ls -a -l
+echo ----------------------
 echo CD TEST
 cd ..
 pwd
+echo ----------------------
 echo SEMICOLON TEST
 ps ; echo HELLO
+echo ----------------------
 echo STDOUT REDIRECT TEST
 w > wholist
 cat wholist
+echo ----------------------
 echo APPEND OUTPUT TEST
 echo what is up >> wholist
 cat wholist
+echo ----------------------
 echo STDIN REDIRECT TEST
 tr a-z A-Z < wholist
+echo ----------------------
 echo DOUBLE REDIRECT TEST
 tr a-z A-Z < wholist > foo
 cat foo
+echo ----------------------
 echo PIPE TEST
 ls | wc
+echo ----------------------
 rm wholist foo
 echo EXIT
 exit
