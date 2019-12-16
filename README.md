@@ -9,11 +9,11 @@ by Akash Das and Si Liang Lei
     - Example: ```w > wholist``` and ```./program < commands.txt```
 4. Our shell implements simple pipes
     - Example: ```ls|wc```
-5. Our shell implements ">>" which redirects output to a file, appending the redirected output  the end of the given file
+5. ADDITIONAL FEATURE: Our shell implements ">>" which redirects output to a file, appending the redirected output  the end of the given file
     - Example: ```ls -a -l >> testfile```
 
 ## Features Implemented But Were Unsuccessful
-1. None so far
+None
 
 ## Bugs
 1. Cannot take in commands separated by just semicolons. All items on the command line are to be separated by a single space. Must be of the format ```command 1 ; command 2 ; command 3... ```
