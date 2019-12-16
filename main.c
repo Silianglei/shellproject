@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <time.h>
 #include <dirent.h>
-#include "headers.h"
+#include "shell.h"
 
 
 //Continously recieves user input
