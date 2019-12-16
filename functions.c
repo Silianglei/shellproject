@@ -145,8 +145,17 @@ void pipeCommand(int j, char ** command){
 		strcat(line, " ");
 	}
   line[strlen(line)-1] = 0;
-  printf("%s\n", line);
   char ** commands = parse_args(line, "|");
+  int i = 0;
+  while(commands[i] != NULL){
+    if (commands[i][0] == 32) {
+		    commands[i]++;
+    }
+	  if (commands[i][strlen(commands[i]) - 1] == 32) {
+		    commands[i][strlen(commands[i]) - 1] = 0;
+    }
+    i++;
+	}
   char ** command1 = parse_args(commands[0], " ");
   char ** command2 = parse_args(commands[1], " ");
 
@@ -155,16 +164,16 @@ void pipeCommand(int j, char ** command){
 
   if (fork() == 0) {
     dup2(pippy[1], STDOUT_FILENO);
-    if (execvp(command1[0], command1) == -1)
-      exit(-1);
-    }
+    execvp(command1[0], command1);
+    exit(1);
+  }
   wait(&j);
 
   if (fork() == 0) {
 		dup2(pippy[0], STDIN_FILENO);
 		close(pippy[1]);
-		if (execvp(command2[0], command2) == -1)
-			exit(-1);
+		execvp(command2[0], command2);
+		exit(1);
 	}
   close(pippy[0]);
   close(pippy[1]);
