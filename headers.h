@@ -33,3 +33,6 @@ void redirectDouble(int j, char ** command);
 // Input: Takes an integer and an array of strings
 // Returns: void
 // Redirects the contents of a given file as the input for a process. That output is then redirected into another given file.
+
+int find_pipe(char ** args);
+void pipeCommand(int j, char ** line);

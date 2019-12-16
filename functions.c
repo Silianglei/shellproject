@@ -22,6 +22,30 @@ int find_redirectInput(char ** args){
   return -1;
 }
 
+int find_redirectOutput(char ** args){
+  int index = 0;
+  const char *outDir = ">";
+  while (args[index] != NULL) {
+    if (strcmp(args[index], outDir) == 0) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
+}
+
+int find_pipe(char ** args){
+  int index = 0;
+  const char *outDir = "|";
+  while (args[index] != NULL) {
+    if (strcmp(args[index], outDir) == 0) {
+      return index;
+    }
+    index++;
+  }
+  return -1;
+}
+
 void redirectInput(int j, char ** command){
   char dest[100] = "";
   for (int i = 0; command[i] != NULL; i++) {
@@ -55,19 +79,6 @@ void redirectInput(int j, char ** command){
   wait(&j);
 }
 
-
-
-int find_redirectOutput(char ** args){
-  int index = 0;
-  const char *outDir = ">";
-  while (args[index] != NULL) {
-    if (strcmp(args[index], outDir) == 0) {
-      return index;
-    }
-    index++;
-  }
-  return -1;
-}
 
 void redirectOutput(int j, char ** command){
   int delim = find_redirectOutput(command);
@@ -127,6 +138,32 @@ void redirectDouble(int j, char ** command){
   close(wfile);
 }
 
+void pipeCommand(int j, char ** line){
+  char ** commands = parse_args(line, "|");
+  char ** command1 = parse_args(commands[0], " ");
+  char ** command2 = parse_args(commands[1], " ");
+
+  int pippy[2];
+  pipe(pippy);
+
+  if (fork() == 0) {
+    dup2(pippy[1], STDOUT_FILENO);
+    if (execvp(command1[0], command1) == -1)
+      exit(-1);
+    }
+  wait(&j);
+
+  if (fork() == 0) {
+		dup2(pippy[0], STDIN_FILENO);
+		close(pippy[1]);
+		if (execvp(command2[0], command2) == -1)
+			exit(-1);
+	}
+  close(pippy[0]);
+  close(pippy[1]);
+  wait(&j);
+}
+
 //Given a string and a delimeter, parse_args seperates the string based on the
 //given delimeter and returns an array of strings
 char ** parse_args( char * line, char * delimeter){
@@ -160,6 +197,9 @@ void runCommand(int j, int k, char input[]){
   else if (find_redirectInput(args) > -1){
     redirectInput(j, args);
   }
+  else if (find_pipe(args) > -1) {
+    pipeCommand(j, line);
+	}
   else{
     if (strcmp(args[0], "exit") == 0) {
       exit(0);
