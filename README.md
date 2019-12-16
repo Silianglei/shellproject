@@ -17,7 +17,7 @@ None
 
 ## Bugs
 1. Cannot take in commands separated by just semicolons. All items on the command line are to be separated by a single space. Must be of the format ```command 1 ; command 2 ; command 3... ```
-2. Unless there is an exit in ```commands.txt```, the shell repeatedly prints the current directory. If there is an ```exit```, the shell prints the current directory a finite number of times and then terminates.
+2. Unless there is an ```exit``` in ```commands.txt```, the shell repeatedly prints the current directory. If there is an ```exit```, the shell prints the current directory a finite number of times and then terminates.
 
 ## Function Headers
 ### main.c
