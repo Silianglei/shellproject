@@ -17,10 +17,7 @@ by Akash Das and Si Liang Lei
 
 ## Function Headers
 ### main.c
-1. int main()
-    - Input: None
-    - Returns: 0
-    - Takes in the commands inputed by the user. Parses the commands separate by a semicolon into separate commands. Executes each of those commands. When each of the commands are executed, the program asks for user input again. Terminates if the command is exit.
+Takes in the commands inputed by the user. Parses the commands separate by a semicolon into separate commands. Executes each of those commands. When each of the commands are executed, the program asks for user input again. Terminates if the command is exit.
 
 ### functions.c
 
